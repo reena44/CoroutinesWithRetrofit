@@ -32,15 +32,10 @@ android {
         jvmTarget = '1.8'
     }
 
-    android {
 
         dataBinding {
-
-            enabled = true
-
+            enabled true
         }
-
-    }
 }
 
 dependencies {

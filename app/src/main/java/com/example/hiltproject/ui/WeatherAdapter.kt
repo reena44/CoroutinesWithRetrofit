@@ -1,18 +1,17 @@
 package com.example.hiltproject.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.hiltproject.R
 import com.example.hiltproject.WeatherDataModel
+import com.example.hiltproject.databinding.ItemLayoutBinding
+import kotlin.collections.ArrayList
 
-class WeatherAdapter(var clickListener: MainActivity, val dataseries: ArrayList<WeatherDataModel>) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>()  {
+class WeatherAdapter(var clickListener: ClickListener, val dataseries: ArrayList<WeatherDataModel>) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>()  {
 
-      val listener = clickListener;
+      val listener :ClickListener = clickListener;
     var list : ArrayList<WeatherDataModel> = dataseries
-    public fun updateList(dataseries: ArrayList<WeatherDataModel>) {
+    fun updateList(dataseries: ArrayList<WeatherDataModel>) {
         list.clear()
         list.addAll(dataseries)
         notifyDataSetChanged()
@@ -21,33 +20,34 @@ class WeatherAdapter(var clickListener: MainActivity, val dataseries: ArrayList<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_layout,parent,false))
+
+       val binding =  ItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindView(list[position],holder)
+        holder.bindView(list[position],listener)
+
 
     }
 
     override fun getItemCount(): Int {
      return   list.size
     }
-    class ViewHolder (view:View):RecyclerView.ViewHolder(view){
-        var textview = view.findViewById<TextView>(R.id.text)
-        var textview1 = view.findViewById<TextView>(R.id.text1)
+    class ViewHolder(val itemBinding: ItemLayoutBinding):RecyclerView.ViewHolder(itemBinding.root){
 
-        fun bindView(weatherDataModel: WeatherDataModel, holder: ViewHolder) {
-
-            holder.textview.text = weatherDataModel.timepoint.toString()
-            holder.textview1.text = weatherDataModel.temp2m.toString()
-
-
-        }
-
-
+        fun bindView(weatherDataModel: WeatherDataModel, listener: ClickListener) {
+            itemBinding.apply {
+                text.text = weatherDataModel.timepoint.toString()
+                text1.text = weatherDataModel.temp2m.toString()
+                llRoot.setOnClickListener{
+                      listener.onItemClickListener(weatherDataModel)
+                }
+            }
+            }
     }
     interface ClickListener{
-        fun onItemClickListener(position: Int)
+        fun onItemClickListener(position: WeatherDataModel)
     }
 
 

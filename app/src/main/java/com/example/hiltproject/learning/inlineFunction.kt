@@ -1,13 +1,22 @@
 package com.example.hiltproject
 
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+
 
 /*
 fun main(){
     inlineFunction({ println("calling inline functions")})
 }*/
-inline fun inlineFunction(myFun: () -> Unit ) {
-myFun()
-    print("code inside inline function")
+inline fun <reified T : Any>  Activity.startActivityExt(className : Class<T>,bundle : Bundle? ) {
+
+    val intent = Intent(this , className)
+    bundle?.let {
+       intent.putExtras(bundle)
+    }
+    startActivity(intent)
+
 }
 
 fun higherfunc( lmbd: () -> Unit ) {     // accepting lambda as parameter

@@ -40,7 +40,6 @@ class MainActivityViewModel(var mainRepo: MainRepo): ViewModel(), MainRepo.GetDe
 
     class ViewModelFactory(private val viewModel: MainRepo) :
         ViewModelProvider.Factory {
-
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return MainActivityViewModel(viewModel) as T
         }
