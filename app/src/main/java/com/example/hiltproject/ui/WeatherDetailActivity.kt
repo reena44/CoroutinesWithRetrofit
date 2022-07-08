@@ -3,36 +3,26 @@ package com.example.hiltproject.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hiltproject.WeatherDataModel
 import com.example.hiltproject.databinding.ActivityWeatherDetailBinding
+import com.example.hiltproject.roomDatabase.WeatherDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class WeatherDetailActivity : AppCompatActivity() {
-    var binding : ActivityWeatherDetailBinding? = null
-    lateinit var dataModel:WeatherDataModel
+    private var binding : ActivityWeatherDetailBinding? = null
 
-
-    companion object{
-        const val EXTRA_DATA = "extra_data"
-    }
-
-    fun createIntent(context: Context?, data: WeatherDataModel): Intent? {
-        val intent = Intent(context, WeatherDetailActivity::class.java)
-        val bundle = Bundle()
-        bundle.putParcelable("dhhd",data)
-        intent.putExtra(WeatherDetailActivity.EXTRA_DATA, data)
-
-        return intent
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherDetailBinding.inflate(layoutInflater)
         val view = binding?.root
         setContentView(view)
 
-      dataModel = intent.getParcelableExtra<WeatherDataModel>("dhhd")!!
-
-        if (dataModel != null){
+        GlobalScope.launch {
+            val dao = WeatherDatabase.invoke(application).getWeatherDao()
+            val dataModel=dao.selectSingleItem(1+intent.getIntExtra("POSITION",0))
             binding?.apply {
                 text.text = dataModel.timepoint.toString()
                 text1.text=dataModel.temp2m.toString()

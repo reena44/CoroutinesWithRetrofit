@@ -1,5 +1,6 @@
 package com.example.hiltproject.ui
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,16 +8,16 @@ import com.example.hiltproject.WeatherDataModel
 import com.example.hiltproject.databinding.ItemLayoutBinding
 import kotlin.collections.ArrayList
 
-class WeatherAdapter(var clickListener: ClickListener, val dataseries: ArrayList<WeatherDataModel>) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>()  {
+class WeatherAdapter(private val clickListener: ClickListener) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>()  {
 
-      val listener :ClickListener = clickListener;
-    var list : ArrayList<WeatherDataModel> = dataseries
-    fun updateList(dataseries: ArrayList<WeatherDataModel>) {
+    private val listener :ClickListener = clickListener
+    private var list= ArrayList<WeatherDataModel>()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(dataSeries: ArrayList<WeatherDataModel>) {
         list.clear()
-        list.addAll(dataseries)
+        list.addAll(dataSeries)
         notifyDataSetChanged()
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,28 +27,26 @@ class WeatherAdapter(var clickListener: ClickListener, val dataseries: ArrayList
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindView(list[position],listener)
-
-
+        holder.bindView(list[position],listener, position)
     }
 
     override fun getItemCount(): Int {
-     return   list.size
+     return  list.size
     }
-    class ViewHolder(val itemBinding: ItemLayoutBinding):RecyclerView.ViewHolder(itemBinding.root){
+    class ViewHolder(private val itemBinding: ItemLayoutBinding):RecyclerView.ViewHolder(itemBinding.root){
 
-        fun bindView(weatherDataModel: WeatherDataModel, listener: ClickListener) {
+        fun bindView(weatherDataModel: WeatherDataModel, listener: ClickListener, position: Int) {
             itemBinding.apply {
                 text.text = weatherDataModel.timepoint.toString()
                 text1.text = weatherDataModel.temp2m.toString()
                 llRoot.setOnClickListener{
-                      listener.onItemClickListener(weatherDataModel)
+                      listener.onItemClickListener(position)
                 }
             }
             }
     }
     interface ClickListener{
-        fun onItemClickListener(position: WeatherDataModel)
+        fun onItemClickListener(position: Int)
     }
 
 
