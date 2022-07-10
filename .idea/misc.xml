@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/CoroutinesWithRetrofit/app/src/main/res/layout/activity_broad_cast_reciever.xml" value="0.19947916666666668" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/CoroutinesWithRetrofit/app/src/main/res/layout/activity_main.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/CoroutinesWithRetrofit/app/src/main/res/layout/activity_main2.xml" value="0.21927083333333333" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/CoroutinesWithRetrofit/app/src/main/res/layout/activity_weather_detail.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/CoroutinesWithRetrofit/app/src/main/res/layout/item_layout.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/DELL/HiltProject/app/src/main/res/layout/activity_main.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/DELL/HiltProject/app/src/main/res/layout/item_layout.xml" value="0.19947916666666668" />
       </map>
