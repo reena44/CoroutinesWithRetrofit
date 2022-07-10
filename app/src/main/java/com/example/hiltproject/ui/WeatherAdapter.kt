@@ -1,6 +1,5 @@
 package com.example.hiltproject.ui
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,13 +9,12 @@ import com.example.hiltproject.WeatherDataModel
 import com.example.hiltproject.databinding.ItemLayoutBinding
 import kotlin.collections.ArrayList
 
-class WeatherAdapter(private val clickListener: ClickListener) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>()  {
+class WeatherAdapter(clickListener: ClickListener) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>()  {
 
     private val listener :ClickListener = clickListener
     private var list = emptyList<WeatherDataModel>()
 
 
-    @SuppressLint("NotifyDataSetChanged")
     fun updateList(dataSeries: ArrayList<WeatherDataModel>) {
         val diffUtil =
             WeatherDiffUtil(list, dataSeries)
@@ -32,7 +30,9 @@ class WeatherAdapter(private val clickListener: ClickListener) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindView(list[position],listener, position)
+        with(holder){
+            bindView(list[position],listener, position)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -42,8 +42,10 @@ class WeatherAdapter(private val clickListener: ClickListener) : RecyclerView.Ad
 
         fun bindView(weatherDataModel: WeatherDataModel, listener: ClickListener, position: Int) {
             itemBinding.apply {
-                text.text = weatherDataModel.timepoint.toString()
-                text1.text = weatherDataModel.temp2m.toString()
+                with(weatherDataModel){
+                    text.text = this.timepoint.toString()
+                    text1.text = this.temp2m.toString()
+                }
                 llRoot.setOnClickListener{
                     listener.onItemClickListener(position)
                 }

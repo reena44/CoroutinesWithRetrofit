@@ -11,6 +11,7 @@ import retrofit2.http.GET
 interface RetrofitService {
 
 
+
     @GET("bin/astro.php?lon=79.45&lat=43.98&ac=0&unit=metric&output=json&tzshift=0")
    suspend fun getWeatherListAsync(): WeatherModel
 

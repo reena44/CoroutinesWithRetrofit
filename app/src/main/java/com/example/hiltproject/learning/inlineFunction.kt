@@ -3,8 +3,27 @@ package com.example.hiltproject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+
+var n1 = 0
+var n2:kotlin.Int = 1
+var n3:kotlin.Int = 0
+
+val count = 20
+/*Log.d("???????????>>>>>>>....","$n1 $n2") //printing 0 and 1
+
+printFibonacci(count-2)*/
 
 
+private fun printFibonacci(count: Int) {
+    if (count > 0) {
+        n3 = n1 + n2
+        n1 = n2
+        n2 = n3
+        Log.d("ghj,."," $n3")
+        printFibonacci(count - 1)
+    }
+}
 /*
 fun main(){
     inlineFunction({ println("calling inline functions")})
